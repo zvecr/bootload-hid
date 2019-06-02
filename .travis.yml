@@ -1,0 +1,19 @@
+language: node_js
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
+    - build-essential
+    - libusb-1.0-0-dev
+    - libudev-dev
+
+deploy:
+  provider: npm
+  email: "npm@zvecr.com"
+  api_key: $NPM_API_KEY
+  on:
+    tags: true
