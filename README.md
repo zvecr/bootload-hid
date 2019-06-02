@@ -3,8 +3,9 @@
 
 [![Build Status](https://travis-ci.org/zvecr/bootload-hid.svg?branch=master)](https://travis-ci.org/zvecr/bootload-hid)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=zvecr/bootload-hid)](https://dependabot.com)
+![Code Status](https://img.shields.io/badge/status-alpha-red.svg)
 
-<span style="font-size:200%;color:red">CURRENTLY ALPHA: USE AT OWN RISK</span>
+## CURRENTLY ALPHA: USE AT OWN RISK
 
 NodeJS implementation of <https://www.obdev.at/products/vusb/bootloadhid.html>.
 
