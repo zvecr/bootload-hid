@@ -86,9 +86,33 @@ describe('BootloadHID EventEmitter', () => {
     });
   });
 
-  it('should support custom debuging functions');
+  it('should support custom debuging functions', async () => {
+    const logger = sinon.stub();
+    this.mod = new BootloadHID({ debug: logger });
 
-  it('should propogate flashing events');
+    await this.mod.flash('asdf.hex');
+
+    logger.callCount.should.be.greaterThan(0);
+  });
+
+  it('should propogate flashing events', async () => {
+    const connect = sinon.stub();
+    const start = sinon.stub();
+    const progress = sinon.stub();
+    const finished = sinon.stub();
+
+    this.mod.on('connected', connect);
+    this.mod.on('flash:start', start);
+    this.mod.on('flash:progress', progress);
+    this.mod.on('flash:done', finished);
+
+    await this.mod.flash('asdf.hex');
+
+    connect.callCount.should.be.eq(1);
+    start.callCount.should.be.eq(1);
+    progress.callCount.should.be.eq(2);
+    finished.callCount.should.be.eq(1);
+  });
 
   it('should not flash a non BootloadHID device', (done) => {
     mockNodeHID.devices.returns([{ vendorId: 0x0002, productId: 0x03, path: '/tmp/hidraw3' }]);
@@ -114,11 +138,43 @@ describe('BootloadHID EventEmitter', () => {
     });
   });
 
+  it('should propogate file open errors', (done) => {
+    mockFs.promises.readFile.throws();
+
+    this.mod.flash('asdf.hex', (err) => {
+      if (!err) {
+        done('error expected');
+      } else {
+        done();
+      }
+    });
+  });
+
   it('should propogate device open errors');
 
-  it('should propogate device read errors');
+  it('should propogate device read errors', (done) => {
+    DummyHID.prototype.getFeatureReport.throws();
 
-  it('should propogate device write errors');
+    this.mod.flash('asdf.hex', (err) => {
+      if (!err) {
+        done('error expected');
+      } else {
+        done();
+      }
+    });
+  });
+
+  it('should propogate device write errors', (done) => {
+    DummyHID.prototype.sendFeatureReport.throws();
+
+    this.mod.flash('asdf.hex', (err) => {
+      if (!err) {
+        done('error expected');
+      } else {
+        done();
+      }
+    });
+  });
 
   it('should list available devices', (done) => {
     mockNodeHID.devices.returns([
