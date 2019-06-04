@@ -12,7 +12,7 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "npm run lint:js && npm run lint:md",
-    "lint:js": "eslint ./lib",
+    "lint:js": "eslint ./lib ./test",
     "lint:md": "remark .",
     "test": "mocha",
     "coverage": "nyc --reporter=text mocha"

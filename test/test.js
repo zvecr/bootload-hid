@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-env mocha */
 const chai = require('chai');
 const sinon = require('sinon');
@@ -46,7 +47,7 @@ mockery.enable({
 
 const BootloadHID = require('../lib/index');
 
-const should = chai.should();
+chai.should();
 
 describe('BootloadHID EventEmitter', () => {
   beforeEach(() => {
