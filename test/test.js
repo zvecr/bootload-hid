@@ -57,7 +57,7 @@ describe('BootloadHID EventEmitter', () => {
 
     mockNodeHID.devices.returns([{ vendorId: 0x16c0, productId: 1503, path: '/tmp/hidraw1' }]);
 
-    DummyHID.prototype.getFeatureReport.returns(Buffer.of(0, 1, 0x80, 0, 0, 0x80, 0, 0));
+    DummyHID.prototype.getFeatureReport.returns(Buffer.of(1, 0x80, 0, 0, 0x80, 0, 0, 0));
   });
 
   afterEach(() => {
@@ -127,7 +127,7 @@ describe('BootloadHID EventEmitter', () => {
   });
 
   it('should not flash an oversized file', (done) => {
-    DummyHID.prototype.getFeatureReport.returns(Buffer.of(0, 1, 0x80, 0, 0x50, 0x8, 0, 0));
+    DummyHID.prototype.getFeatureReport.returns(Buffer.of(1, 0x80, 0, 0x50, 0x8, 0, 0, 0));
 
     this.mod.flash('asdf.hex', (err) => {
       if (!err) {
